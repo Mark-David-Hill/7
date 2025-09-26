@@ -1,6 +1,7 @@
 import {Fragment, useMemo} from 'react';
 import styled from '@emotion/styled';
 
+import ClippedBox from 'sentry/components/clippedBox';
 import {CodeSnippet} from 'sentry/components/codeSnippet';
 import LoadingIndicator from 'sentry/components/loadingIndicator';
 import {space} from 'sentry/styles/space';
@@ -103,9 +104,11 @@ export function DatabaseSpanDescription({
           <LoadingIndicator mini />
         </WithPadding>
       ) : (
-        <CodeSnippet language={system === 'mongodb' ? 'json' : 'sql'} isRounded={false}>
-          {formattedDescription ?? ''}
-        </CodeSnippet>
+        <ClippedBox clipHeight={300} btnText="View Full Query">
+          <CodeSnippet language={system === 'mongodb' ? 'json' : 'sql'} isRounded={false}>
+            {formattedDescription ?? ''}
+          </CodeSnippet>
+        </ClippedBox>
       )}
 
       {!areIndexedSpansLoading && !isRawSpanLoading && (
